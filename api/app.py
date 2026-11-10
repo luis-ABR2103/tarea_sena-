@@ -2,6 +2,7 @@ from flask import Flask
 from flask_mysqldb import MySQL
 from Config import Config
 from Routes import CargarRutas
+from flask_cors import CORS 
 
 app = Flask(__name__)
 # blueprint
