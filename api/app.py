@@ -6,6 +6,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 # blueprint
+CORS(app)
 app.config.from_object(Config) 
 mysql = MySQL(app)
 
