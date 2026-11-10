@@ -2,6 +2,7 @@ flask
 flask-mysqldb
 python-dotenv
 gunicorn
+flask-cors
 
 
 # pip install -r requirements.txt
