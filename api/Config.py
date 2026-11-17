@@ -13,6 +13,7 @@ class Config:
     # FOUND_ROWS: en un UPDATE, rowcount cuenta las filas encontradas y no solo
     # las modificadas. Sin esto, guardar un registro sin cambios daba 404.
     MYSQL_CUSTOM_OPTIONS = {"client_flag": CLIENT.FOUND_ROWS}
-    MYSQL_SSL = {
-        "ca": "/etc/secrets/aiven-ca.pem"
-    }
+    # Certificado de Aiven: en Render está en /etc/secrets (Secret File).
+    # Si el archivo no existe (por ejemplo en tu PC) se conecta sin él.
+    _CA = os.getenv('MYSQL_SSL_CA', '/etc/secrets/aiven-ca.pem')
+    MYSQL_SSL = {"ca": _CA} if os.path.exists(_CA) else None
