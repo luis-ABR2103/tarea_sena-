@@ -35,12 +35,12 @@ class matEvaController:
     
  def update(uuid):
         data = request.get_json()
-        campos_req = [ "MATE_MAT_ID", "MATE_EVA_ID"]
+        campos_req = ["MATE_NOTA", "MATE_EVA_ID", "MATE_MAT_ID"]
         faltantes = [ x for x in campos_req if x not in data ]
         if len(faltantes) > 0:
             return jsonify({"faltan parametros": faltantes}), 400
         x = MatEvaService.update(uuid, data)
-        if x == 200:
+        if x:
             return jsonify({"mensaje": f"se actualizo la mat_eva con uuid: {uuid}"}), 200
         else:
             return jsonify({"mensaje": f"no se encontro la mat_eva con uuid: {uuid}"}), 404

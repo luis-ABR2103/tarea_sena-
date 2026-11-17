@@ -10,7 +10,7 @@ class PersonaService:
         uuid_apr = uuid.uuid4() # genera un uuid
         c  = current_app.mysql.connection.cursor()
         sql = """INSERT INTO T_PERSONA (PER_UUID, PER_PRI_NOMBRE, PER_SEG_NOMBRE, PER_PRI_APELLIDO, PER_SEG_APELLIDO, PER_DOCUMENTO) VALUES  (%s, %s, %s, %s, %s, %s)""" #consulta parametrizada
-        c.execute(sql, (uuid_apr, data['PER_PRI_NOMBRE'], data['PER_SEG_NOMBRE'], data['PER_PRI_APELLIDO'], data['PER_SEG_APELLIDO'], data['PER_DOCUMENTO']))
+        c.execute(sql, (uuid_apr, data['PER_PRI_NOMBRE'], data.get('PER_SEG_NOMBRE'), data['PER_PRI_APELLIDO'], data.get('PER_SEG_APELLIDO'), data['PER_DOCUMENTO']))
         c.connection.commit() # guarda los cambios
         id = c.lastrowid # devuelve el id del ultimo registro insertado
         c.close()

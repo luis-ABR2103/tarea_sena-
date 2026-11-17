@@ -11,7 +11,6 @@ class Aprendiz:
         return {
             "APR_ID": self.__APR_ID,
             "APR_UUID": self.__APR_UUID,
-            "APR_FECHA_NAC": self.__APR_FECHA_NAC,
+            "APR_FECHA_NAC": str(self.__APR_FECHA_NAC) if self.__APR_FECHA_NAC else None,
             "APR_PER_ID": self.__APR_PER_ID,
-            "APR_PER_ID": self.__APR_PER_ID
         }

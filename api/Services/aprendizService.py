@@ -3,6 +3,11 @@ from Models.Aprendiz import Aprendiz
 import uuid
 
 
+def _unir(*partes):
+    # el segundo nombre/apellido puede ser NULL; sin esto "Juan" + None falla
+    return " ".join(p for p in partes if p)
+
+
 class aprendizService:
     # opereraciones CRUD
     # CREATE, READ, UPDATE, DELETE
@@ -61,7 +66,7 @@ class aprendizService:
         data = c.fetchall()
         print(data)
         data = [Aprendiz(x[0], x[1], x[2],
-                         {"nombres": x[6]+" "+x[7], "apellidos": x[8]+" "+x[9], "cedula": x[10]}
+                         {"id": x[3], "nombres": _unir(x[6], x[7]), "apellidos": _unir(x[8], x[9]), "cedula": x[10]}
                          ).to_dict() for x in data]
         c.close()
         return data

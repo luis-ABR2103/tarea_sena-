@@ -37,7 +37,7 @@ class CursoController:
         if len(faltantes) > 0:
             return jsonify({"faltan parametros": faltantes}), 400
         x = CursoService.update(uuid, data)
-        if x == 200:
+        if x:
             return jsonify({"mensaje": f"se actualizo el curso con uuid: {uuid}"}), 200
         else:
             return jsonify({"mensaje": f"no se encontro el curso con uuid: {uuid}"}), 404

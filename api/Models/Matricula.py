@@ -13,7 +13,7 @@ class Matricula:
                 "MAT_ID": self.__MAT_ID,
                 "MAT_UUID": self.__MAT_UUID,
                 "MAT_ESTADO": self.__MAT_ESTADO,
-                "MAT_FECHA_INSCRIPCION": self.__MAT_FECHA_INSCRIPCION,
+                "MAT_FECHA_INSCRIPCION": str(self.__MAT_FECHA_INSCRIPCION) if self.__MAT_FECHA_INSCRIPCION else None,
                 "MAT_APR_ID": self.__MAT_APR_ID,
                 "MAT_CUR_ID": self.__MAT_CUR_ID
             }

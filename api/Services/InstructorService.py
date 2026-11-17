@@ -1,6 +1,11 @@
 from flask import current_app
 from Models.Instructor import Instructor
 import uuid
+
+
+def _unir(*partes):
+    # el segundo nombre/apellido puede ser NULL; sin esto "Juan" + None falla
+    return " ".join(p for p in partes if p)
 from Models.Persona import Persona
 
 
@@ -62,7 +67,7 @@ class InstructorService:
             data = c.fetchall()
             print(data)
             data = [Instructor(x[0], x[1], x[2],
-                             {"nombres": x[6]+" "+x[7], "apellidos": x[8]+" "+x[9], "cedula": x[10]}
+                             {"id": x[3], "nombres": _unir(x[6], x[7]), "apellidos": _unir(x[8], x[9]), "cedula": x[10]}
                              ).to_dict() for x in data]
             c.close()
             return data

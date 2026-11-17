@@ -35,12 +35,12 @@ class matriculaController:
     
  def update(uuid):
         data = request.get_json()
-        campos_req = ["MAT_ESTADO", "MAT_FECHA_INCRIPCION", "MAT_CUR_ID", "MAT_APR_ID"]
+        campos_req = ["MAT_ESTADO", "MAT_FECHA_INSCRIPCION", "MAT_CUR_ID", "MAT_APR_ID"]
         faltantes = [ x for x in campos_req if x not in data ]
         if len(faltantes) > 0:
             return jsonify({"faltan parametros": faltantes}), 400
         x = MatriculaService.update(uuid, data)
-        if x == 200:
+        if x:
             return jsonify({"mensaje": f"se actualizo la matricula con uuid: {uuid}"}), 200
         else:
             return jsonify({"mensaje": f"no se encontro la matricula con uuid: {uuid}"}), 404

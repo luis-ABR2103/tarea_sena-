@@ -38,7 +38,7 @@ class EvaluacionController:
         if len(faltantes) > 0:
             return jsonify({"faltan parametros": faltantes}), 400
         x = EvaluacionService.update(uuid, data)
-        if x == 200:
+        if x:
             return jsonify({"mensaje": f"se actualizo la evaluacion con uuid: {uuid}"}), 200
         else:
             return jsonify({"mensaje": f"no se encontro la evaluacion con uuid: {uuid}"}), 404
