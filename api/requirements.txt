@@ -11,3 +11,4 @@ flask-cors
 # que son necesarios par crear la api
 # se hace necesario instalar con el comando
 # de la linea 6 en la terminal
+# Render instala estos paquetes en cada despliegue
