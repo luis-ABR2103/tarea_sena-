@@ -11,17 +11,17 @@ class aprendizController:
         return jsonify(data), 200
 
     def add():
-     data = request.get_json()
+     data = request.get_json(silent=True) or {}
      campos_req = ["APR_FECHA_NAC", "APR_PER_ID"]
      faltantes = [w for w in campos_req if w not in data]
      if len(faltantes) > 0:
-        return jsonify({"faltan parametros": faltantes}), 400
+        return jsonify({"mensaje": "Faltan parametros: " + ", ".join(faltantes), "faltan parametros": faltantes}), 400
 
      try:
          creado = aprendizService.add(data)
      except MySQLdb.IntegrityError:
         return jsonify({"mensaje": "La persona no existe o ya es aprendiz"}), 400
-     return jsonify(creado), 201
+     return jsonify({"mensaje": "Aprendiz registrado correctamente", "aprendiz": creado}), 201
 
     def delete(uuid):
         try:
@@ -49,11 +49,11 @@ class aprendizController:
             )
 
     def update(uuid):
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
         campos_req = ["APR_FECHA_NAC", "APR_PER_ID"]
         faltantes = [x for x in campos_req if x not in data]
         if len(faltantes) > 0:
-            return jsonify({"faltan parametros": faltantes}), 400
+            return jsonify({"mensaje": "Faltan parametros: " + ", ".join(faltantes), "faltan parametros": faltantes}), 400
         x = aprendizService.update(uuid, data)
         if x:
             return jsonify({"mensaje": f"se actualizo el aprendiz con uuid: {uuid}"}), 200

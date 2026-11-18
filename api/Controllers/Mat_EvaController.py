@@ -10,17 +10,17 @@ class matEvaController:
 
 
  def add():
-     data = request.get_json()
+     data = request.get_json(silent=True) or {}
      campos_req = [ "MATE_NOTA", "MATE_EVA_ID", "MATE_MAT_ID"]
      faltantes = [w for w in campos_req if w not in data]
      if len(faltantes) > 0:
-         return jsonify({"faltan parametros": faltantes}), 400
+         return jsonify({"mensaje": "Faltan parametros: " + ", ".join(faltantes), "faltan parametros": faltantes}), 400
  
      try:
          creado = MatEvaService.add(data)
      except MySQLdb.IntegrityError:
-         return jsonify({"mensaje": "Ya existe una mat_eva con ese codigo"}), 409
-     return jsonify(creado), 201
+         return jsonify({"mensaje": "La matricula o la evaluacion no existen"}), 409
+     return jsonify({"mensaje": "Nota registrada correctamente", "mat_eva": creado}), 201
 
 
  def delete(uuid):
@@ -34,11 +34,11 @@ class matEvaController:
         return jsonify({"mensaje": f"No se encontro mat_eva con uuid : {uuid}"}), 404
     
  def update(uuid):
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
         campos_req = ["MATE_NOTA", "MATE_EVA_ID", "MATE_MAT_ID"]
         faltantes = [ x for x in campos_req if x not in data ]
         if len(faltantes) > 0:
-            return jsonify({"faltan parametros": faltantes}), 400
+            return jsonify({"mensaje": "Faltan parametros: " + ", ".join(faltantes), "faltan parametros": faltantes}), 400
         x = MatEvaService.update(uuid, data)
         if x:
             return jsonify({"mensaje": f"se actualizo la mat_eva con uuid: {uuid}"}), 200

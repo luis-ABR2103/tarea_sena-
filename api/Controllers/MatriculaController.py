@@ -10,17 +10,17 @@ class matriculaController:
 
 
  def add():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     campos_req = ["MAT_ESTADO", "MAT_FECHA_INSCRIPCION", "MAT_CUR_ID", "MAT_APR_ID"]
     faltantes = [w for w in campos_req if w not in data]
     if len(faltantes) > 0:
-        return jsonify({"faltan parametros": faltantes}), 400
+        return jsonify({"mensaje": "Faltan parametros: " + ", ".join(faltantes), "faltan parametros": faltantes}), 400
 
     try:
         creado = MatriculaService.add(data)
     except MySQLdb.IntegrityError:
         return jsonify({"mensaje": "El aprendiz o el curso no existen"}), 400
-    return jsonify(creado), 201
+    return jsonify({"mensaje": "Matricula registrada correctamente", "matricula": creado}), 201
 
 
  def delete(uuid):
@@ -34,11 +34,11 @@ class matriculaController:
         return jsonify({"mensaje": f"No se encontro matricula con uuid : {uuid}"}), 404
     
  def update(uuid):
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
         campos_req = ["MAT_ESTADO", "MAT_FECHA_INSCRIPCION", "MAT_CUR_ID", "MAT_APR_ID"]
         faltantes = [ x for x in campos_req if x not in data ]
         if len(faltantes) > 0:
-            return jsonify({"faltan parametros": faltantes}), 400
+            return jsonify({"mensaje": "Faltan parametros: " + ", ".join(faltantes), "faltan parametros": faltantes}), 400
         x = MatriculaService.update(uuid, data)
         if x:
             return jsonify({"mensaje": f"se actualizo la matricula con uuid: {uuid}"}), 200

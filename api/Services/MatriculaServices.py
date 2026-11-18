@@ -7,7 +7,6 @@ class MatriculaService:
     # operaciones CRUD
     # CREATE, READ, UPDATE, DELETE
     @staticmethod
-    @staticmethod
     def add(data):
      uuid_mat = str(uuid.uuid4())
      c = current_app.mysql.connection.cursor()
